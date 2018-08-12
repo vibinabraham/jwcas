@@ -20,11 +20,12 @@ mol.atom = '''
 H 0 0 0
 H 0 0 1
 H 0 1 1
+H 1 1 1
 '''
 
 mol.max_memory = 1000 # MB
 mol.charge = -0
-mol.spin = 1
+mol.spin = 0
 mol.basis = 'sto-3g'
 
 mol.build()
@@ -76,8 +77,8 @@ print("Number of Orbitals       :%16d\n" %(n_orb))
 
 
 #alpha first beta second ordering
-h_spin = spatial_2_spin_oei(n_orb,h)
-g_spin = spatial_2_spin_eri(n_orb,g)
+h_spin = spatial_2_spin_oei_ab(n_orb,h)
+g_spin = spatial_2_spin_eri_ab(n_orb,g)
 
 #####Operators for JW
 ap = np.array([[0, 0], [1, 0]])     #creation operator
@@ -108,14 +109,20 @@ assert(np.allclose(Ham, Ham.T,rtol=1e-05, atol=1e-05))
 
 N = form_N(n_orb,ap,am,no,ho,I2,Iz) #forming the 4^N number operator
 
-Sz = form_Sz(n_orb,ap,am,no,ho,I2,Iz) #forming the 4^N Ms operator
+Sz = form_Sz_ab(n_orb,ap,am,no,ho,I2,Iz) #forming the 4^N Ms operator
 
-S2 = form_S2(n_orb,ap,am,no,ho,I2,Iz) #forming the 4^N <S2> operator
+S2 = form_S2_ab(n_orb,ap,am,no,ho,I2,Iz) #forming the 4^N <S2> operator
 assert(np.allclose(S2, S2.T,rtol=1e-05, atol=1e-05))
 
-###Cutting down the matrix to fci matrix size
-Htiny = fci_block(n_orb,Ham,N,Sz,n_b,n_a)
-S2tiny = fci_block(n_orb,S2,N,Sz,n_b,n_a)
+###Cutting down the matrix based on number of electrons
+Hsmall  = occ_block(n_orb,Ham,N,n_a+n_b)
+Szsmall = occ_block(n_orb,Sz,N,n_a+n_b)
+S2small = occ_block(n_orb,S2,N,n_a+n_b)
+
+
+###Cutting down the matrix based on Ms Symmetry
+Htiny = msblock(n_orb,Hsmall,Szsmall,n_b,n_a)
+S2tiny = msblock(n_orb,S2small,Szsmall,n_b,n_a)
 
 
 #running PYSCF FCI for comparison
