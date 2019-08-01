@@ -19,8 +19,8 @@ mol = gto.Mole()
 mol.atom = '''
 H 0 0 0
 H 0 0 1
-H 0 1 1
-H 1 1 1
+H 0 2 0
+H 0 2 1
 '''
 
 mol.max_memory = 1000 # MB
@@ -146,3 +146,5 @@ print("      Energies                   <S2>")
 print("  ---------------------------------------")
 for i in range(0,e_val.shape[0]):
     print("%16.10f        %16.6f   " %(e_val[i],abs(S2coupled[i,i])))
+
+print(Htiny)

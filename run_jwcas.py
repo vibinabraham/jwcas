@@ -11,7 +11,7 @@ np.set_printoptions(suppress=True, precision=6, linewidth=800)
 numpy_memory = 2
 
 #Localise the orbitals after SCF??
-local = False
+#local = False
 local = True
 
 #PYSCF inputs
@@ -19,12 +19,13 @@ mol = gto.Mole()
 mol.atom = '''
 H 0 0 0
 H 0 0 1
-H 0 1 1
+H 0 0 2
+H 0 0 4
 '''
 
 mol.max_memory = 1000 # MB
 mol.charge = -0
-mol.spin = 1
+mol.spin = 0
 mol.basis = 'sto-3g'
 
 mol.build()
@@ -139,3 +140,5 @@ print("      Energies                   <S2>")
 print("  ---------------------------------------")
 for i in range(0,e_val.shape[0]):
     print("%16.10f        %16.6f   " %(e_val[i],abs(S2coupled[i,i])))
+
+print(S2tiny)
