@@ -1,2 +1,2 @@
-from jwcasci import *
-from pyscf_helper import *
+from .jwcasci import *
+from .pyscf_helper import *
