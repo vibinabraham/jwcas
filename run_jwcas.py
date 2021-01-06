@@ -102,16 +102,16 @@ Ham = np.zeros((4**n_orb,4**n_orb))
 #Ham +=  mat3
 #Ham +=  mat4
 
-Ham = jordon_wigner_form_mat(n_orb,h_spin,g_spin,ap,am,no,ho,I2,Iz) #forming the 4^N hamiltonian
+Ham = jordon_wigner_form_mat(n_orb,h_spin,g_spin) #forming the 4^N hamiltonian
 
 assert(np.allclose(Ham, Ham.T,rtol=1e-05, atol=1e-05))
 
 
-N = form_N(n_orb,ap,am,no,ho,I2,Iz) #forming the 4^N number operator
+N = form_N(n_orb) #forming the 4^N number operator
 
-Sz = form_Sz(n_orb,ap,am,no,ho,I2,Iz) #forming the 4^N Ms operator
+Sz = form_Sz(n_orb) #forming the 4^N Ms operator
 
-S2 = form_S2(n_orb,ap,am,no,ho,I2,Iz) #forming the 4^N <S2> operator
+S2 = form_S2(n_orb) #forming the 4^N <S2> operator
 assert(np.allclose(S2, S2.T,rtol=1e-05, atol=1e-05))
 
 ###Cutting down the matrix to fci matrix size
