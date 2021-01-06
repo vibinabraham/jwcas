@@ -1,4 +1,3 @@
-from pyscf import gto, scf, mcscf, fci, ao2mo, lo, molden
 import numpy as np
 from sys import argv
 from math import factorial
