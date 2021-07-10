@@ -1,4 +1,4 @@
-# CAS-CI with Jordon Wigner Transformation
+# CAS-CI with Jordan Wigner Transformation
 
 Requires pyscf to get the integrals.
 
